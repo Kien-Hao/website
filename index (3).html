@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThS. Võ Thị Kiên Hảo - Giảng viên Công nghệ Thực phẩm</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.85), rgba(5, 150, 105, 0.9)), 
+                        url('https://images.unsplash.com/photo-1562774053-701939374585?w=1920') center/cover;
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        .food-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .food-gallery img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .food-gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fbbf24;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .formula-box {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-left: 4px solid #10b981;
+        }
+        .publication-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .publication-card:hover {
+            border-left-color: #fbbf24;
+            transform: translateX(10px);
+        }
+        .scroll-smooth {
+            scroll-behavior: smooth;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        .course-card {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .course-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        .course-content.active {
+            max-height: 2000px;
+        }
+    </style>
+</head>
+<body class="scroll-smooth bg-emerald-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-emerald-700/95 backdrop-blur-md shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center">
+                        <i class="fas fa-flask text-emerald-800 text-xl"></i>
+                    </div>
+                    <span class="text-white font-bold text-lg hidden md:block">ThS. Võ Thị Kiên Hảo</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="#home" class="nav-link text-white hover:text-yellow-300 transition">Trang chủ</a>
+                    <a href="#about" class="nav-link text-white hover:text-yellow-300 transition">Giới thiệu</a>
+                    <a href="#teaching" class="nav-link text-white hover:text-yellow-300 transition">Giảng dạy</a>
+                    <a href="#publications" class="nav-link text-white hover:text-yellow-300 transition">Bài báo</a>
+                    <a href="#research" class="nav-link text-white hover:text-yellow-300 transition">Đề tài</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-banner flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-emerald-900/30"></div>
+        
+        <!-- Food Images Gallery Overlay -->
+        <div class="absolute top-20 left-10 w-32 h-32 rounded-2xl overflow-hidden shadow-2xl floating opacity-80 hidden lg:block">
+            <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=300" class="w-full h-full object-cover" alt="Bánh kẹo">
+        </div>
+        <div class="absolute top-40 right-20 w-28 h-28 rounded-2xl overflow-hidden shadow-2xl floating opacity-80 hidden lg:block" style="animation-delay: 0.5s;">
+            <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=300" class="w-full h-full object-cover" alt="Trái cây">
+        </div>
+        <div class="absolute bottom-40 left-20 w-24 h-24 rounded-2xl overflow-hidden shadow-2xl floating opacity-80 hidden lg:block" style="animation-delay: 1s;">
+            <img src="https://images.unsplash.com/photo-1559737558-2f5a35f4523b?w=300" class="w-full h-full object-cover" alt="Hải sản">
+        </div>
+        <div class="absolute bottom-32 right-16 w-36 h-36 rounded-2xl overflow-hidden shadow-2xl floating opacity-80 hidden lg:block" style="animation-delay: 1.5s;">
+            <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=300" class="w-full h-full object-cover" alt="Thực phẩm">
+        </div>
+
+        <div class="text-center z-10 px-4">
+            <div class="mb-8">
+                <div class="w-40 h-40 mx-auto rounded-full bg-gradient-to-br from-yellow-400 to-yellow-500 p-2 shadow-2xl">
+                    <div class="w-full h-full rounded-full bg-white flex items-center justify-center">
+                        <i class="fas fa-user-graduate text-6xl text-emerald-600"></i>
+                    </div>
+                </div>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+                ThS. <span class="text-yellow-400">Võ Thị Kiên Hảo</span>
+            </h1>
+            <p class="text-2xl md:text-3xl text-emerald-100 mb-8">Giảng viên ngành Công nghệ Thực phẩm</p>
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <span class="bg-white/20 backdrop-blur px-6 py-2 rounded-full text-white">
+                    <i class="fas fa-university mr-2"></i>Đại học Tây Đô
+                </span>
+                <span class="bg-white/20 backdrop-blur px-6 py-2 rounded-full text-white">
+                    <i class="fas fa-microscope mr-2"></i>Khoa Sinh học Ứng dụng
+                </span>
+            </div>
+            <a href="#about" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-emerald-900 font-bold px-8 py-4 rounded-full transition transform hover:scale-105 shadow-lg">
+                <i class="fas fa-arrow-down mr-2"></i>Tìm hiểu thêm
+            </a>
+        </div>
+    </section>
+
+    <!-- Food Gallery Strip -->
+    <div class="bg-emerald-600 py-6">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="food-gallery">
+                <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400" alt="Bánh ngọt">
+                <img src="https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400" alt="Kẹo">
+                <img src="https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=400" alt="Tôm">
+                <img src="https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=400" alt="Mực">
+                <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400" alt="Trái cây">
+                <img src="https://images.unsplash.com/photo-1606914501449-5a96b6ce24ca?w=400" alt="Thực phẩm lạnh">
+                <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400" alt="Đường bánh">
+                <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400" alt="Cá">
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gradient-to-b from-emerald-100 to-emerald-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-4">
+                <span class="text-yellow-500">Giới thiệu</span> về tôi
+            </h2>
+            <div class="w-24 h-1 bg-emerald-500 mx-auto mb-12"></div>
+            
+            <div class="glass-card rounded-3xl p-8 md:p-12">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600" alt="Phòng thí nghiệm" class="rounded-2xl shadow-xl w-full">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-emerald-800 mb-6">
+                            <i class="fas fa-graduation-cap text-yellow-500 mr-3"></i>Thông tin học vấn
+                        </h3>
+                        <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                            <strong class="text-emerald-700">Thạc sĩ chuyên ngành Công nghệ Thực phẩm</strong>, 
+                            Khoa Sinh học Ứng dụng, Trường Đại học Tây Đô. Chuyên nghiên cứu về 
+                            <span class="text-emerald-600 font-semibold">chế biến và bảo quản thực phẩm</span>.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 p-4 bg-emerald-50 rounded-xl">
+                                <div class="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-phone text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Điện thoại liên hệ</p>
+                                    <p class="text-lg font-bold text-emerald-700">0982 829 739</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 p-4 bg-yellow-50 rounded-xl">
+                                <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-envelope text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Email</p>
+                                    <a href="mailto:vtkhao@tdu.edu.vn" class="text-lg font-bold text-emerald-700 hover:text-yellow-600">vtkhao@tdu.edu.vn</a>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 p-4 bg-emerald-50 rounded-xl">
+                                <div class="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-university text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Đơn vị công tác</p>
+                                    <p class="text-lg font-bold text-emerald-700">Trường Đại học Tây Đô</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teaching Section -->
+    <section id="teaching" class="py-20 bg-emerald-600">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-white mb-4">
+                Học phần <span class="text-yellow-400">Giảng dạy</span>
+            </h2>
+            <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
+
+            <div class="grid gap-6">
+                <!-- Course 1: Công nghệ lạnh thực phẩm -->
+                <div class="glass-card rounded-2xl overflow-hidden">
+                    <div class="course-card p-6" onclick="toggleCourse(1)">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-snowflake text-white text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-emerald-800">Công nghệ lạnh thực phẩm</h3>
+                                    <p class="text-gray-600">Bảo quản và làm lạnh thực phẩm</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down text-emerald-600 text-xl transition-transform" id="icon1"></i>
+                        </div>
+                    </div>
+                    <div class="course-content px-6 pb-6" id="course1">
+                        <div class="formula-box p-6 rounded-xl mt-4">
+                            <h4 class="text-lg font-bold text-emerald-800 mb-4">
+                                <i class="fas fa-calculator mr-2"></i>Công thức tính thời gian bảo quản thực phẩm
+                            </h4>
+                            <div class="bg-white p-4 rounded-lg mb-4">
+                                <p class="font-mono text-lg mb-2"><strong>Bước 1:</strong> Tính số Biot: <span class="text-emerald-700 font-bold">Bi = (h × a) / k</span></p>
+                                <p class="font-mono text-lg mb-2"><strong>Bước 2:</strong> Tính toán hệ số nhiệt độ</p>
+                                <p class="font-mono text-lg mb-2"><strong>Bước 3:</strong> Tra F<sub>o</sub> từ đồ thị</p>
+                                <p class="font-mono text-lg"><strong>Bước 4:</strong> Tính thời gian: <span class="text-emerald-700 font-bold">t = (F<sub>o</sub> × C<sub>p</sub> × ρ × a²) / k</span> (giây)</p>
+                            </div>
+                            
+                            <!-- Calculator -->
+                            <div class="bg-white p-6 rounded-xl">
+                                <h5 class="font-bold text-emerald-700 mb-4"><i class="fas fa-calculator mr-2"></i>Công cụ tính toán</h5>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">h (Hệ số truyền nhiệt, W/m²K)</label>
+                                        <input type="number" id="h1" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Nhập h">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">a (Bán kính/Chiều dày, m)</label>
+                                        <input type="number" id="a1" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Nhập a">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">k (Hệ số dẫn nhiệt, W/mK)</label>
+                                        <input type="number" id="k1" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Nhập k">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">F<sub>o</sub> (Số Fourier)</label>
+                                        <input type="number" id="fo1" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Nhập Fo">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">C<sub>p</sub> (Nhiệt dung riêng, J/kgK)</label>
+                                        <input type="number" id="cp1" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Nhập Cp">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">ρ (Khối lượng riêng, kg/m³)</label>
+                                        <input type="number" id="rho1" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Nhập ρ">
+                                    </div>
+                                </div>
+                                <button onclick="calculateCooling()" class="mt-4 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg transition">
+                                    <i class="fas fa-calculator mr-2"></i>Tính toán
+                                </button>
+                                <div id="result1" class="mt-4 p-4 bg-yellow-50 rounded-lg hidden">
+                                    <p class="font-bold text-emerald-800"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 2: Công nghệ chế biến đường và bánh kẹo -->
+                <div class="glass-card rounded-2xl overflow-hidden">
+                    <div class="course-card p-6" onclick="toggleCourse(2)">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-600 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-cookie text-white text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-emerald-800">Công nghệ chế biến đường và bánh kẹo</h3>
+                                    <p class="text-gray-600">Sản xuất đường, bánh và các loại kẹo</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down text-emerald-600 text-xl transition-transform" id="icon2"></i>
+                        </div>
+                    </div>
+                    <div class="course-content px-6 pb-6" id="course2">
+                        <div class="grid md:grid-cols-2 gap-4 mt-4">
+                            <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400" alt="Bánh ngọt" class="rounded-xl w-full h-48 object-cover">
+                            <img src="https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=400" alt="Kẹo" class="rounded-xl w-full h-48 object-cover">
+                        </div>
+                        <div class="mt-4 p-4 bg-emerald-50 rounded-xl">
+                            <h4 class="font-bold text-emerald-800 mb-2">Nội dung môn học:</h4>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>Công nghệ sản xuất đường từ mía, củ cải đường</li>
+                                <li>Quy trình sản xuất bánh quy, bánh mì, bánh ngọt</li>
+                                <li>Kỹ thuật làm kẹo cứng, kẹo mềm, kẹo dẻo</li>
+                                <li>Kiểm soát chất lượng sản phẩm bánh kẹo</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 3: Công nghệ chế biến thủy - hải sản -->
+                <div class="glass-card rounded-2xl overflow-hidden">
+                    <div class="course-card p-6" onclick="toggleCourse(3)">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-fish text-white text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-emerald-800">Công nghệ chế biến thủy - hải sản</h3>
+                                    <p class="text-gray-600">Chế biến và bảo quản thủy hải sản</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down text-emerald-600 text-xl transition-transform" id="icon3"></i>
+                        </div>
+                    </div>
+                    <div class="course-content px-6 pb-6" id="course3">
+                        <div class="formula-box p-6 rounded-xl mt-4">
+                            <h4 class="text-lg font-bold text-emerald-800 mb-4">
+                                <i class="fas fa-fish mr-2"></i>Công thức tính tốc độ ươn hỏng tương đối (RRS)
+                            </h4>
+                            
+                            <!-- Cá ôn đới -->
+                            <div class="bg-white p-4 rounded-lg mb-4">
+                                <h5 class="font-bold text-cyan-700 mb-2"><i class="fas fa-temperature-low mr-2"></i>Đối với cá ôn đới:</h5>
+                                <p class="font-mono text-lg mb-2"><span class="text-emerald-700 font-bold">RRS = (1 + 0.1 × T)²</span></p>
+                                <p class="font-mono">Thời gian bảo quản ở t°C = Thời gian bảo quản ở 0°C / RRS</p>
+                            </div>
+                            
+                            <!-- Cá nhiệt đới -->
+                            <div class="bg-white p-4 rounded-lg mb-4">
+                                <h5 class="font-bold text-orange-600 mb-2"><i class="fas fa-temperature-high mr-2"></i>Đối với cá nhiệt đới:</h5>
+                                <p class="font-mono text-lg mb-2"><span class="text-emerald-700 font-bold">Ln(RRS) = 0.12 × t</span></p>
+                                <p class="font-mono mb-2">Với t: Nhiệt độ bảo quản cá (°C)</p>
+                                <p class="font-mono">→ Tính RRS ở t°C, từ đó tính thời gian bảo quản ở t°C = Thời gian bảo quản ở 0°C / RRS</p>
+                            </div>
+
+                            <!-- Calculator RRS -->
+                            <div class="bg-white p-6 rounded-xl">
+                                <h5 class="font-bold text-emerald-700 mb-4"><i class="fas fa-calculator mr-2"></i>Công cụ tính RRS</h5>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Loại cá</label>
+                                        <select id="fishType" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-emerald-500">
+                                            <option value="temperate">Cá ôn đới</option>
+                                            <option value="tropical">Cá nhiệt đới</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Nhiệt độ t (°C)</label>
+                                        <input type="number" id="temp" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Nhập nhiệt độ">
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Thời gian bảo quản ở 0°C (ngày)</label>
+                                        <input type="number" id="time0" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Nhập thời gian">
+                                    </div>
+                                </div>
+                                <button onclick="calculateRRS()" class="mt-4 bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 rounded-lg transition">
+                                    <i class="fas fa-calculator mr-2"></i>Tính RRS
+                                </button>
+                                <div id="resultRRS" class="mt-4 p-4 bg-yellow-50 rounded-lg hidden">
+                                    <p class="font-bold text-emerald-800"></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-4 mt-4">
+                            <img src="https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=400" alt="Tôm" class="rounded-xl w-full h-40 object-cover">
+                            <img src="https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=400" alt="Mực" class="rounded-xl w-full h-40 object-cover">
+                            <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400" alt="Cá" class="rounded-xl w-full h-40 object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section id="publications" class="py-20 bg-gradient-to-b from-emerald-50 to-emerald-100">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-4">
+                <span class="text-yellow-500">Bài báo</span> công bố
+            </h2>
+            <div class="w-24 h-1 bg-emerald-500 mx-auto mb-12"></div>
+
+            <div class="space-y-6">
+                <!-- Publication 1 -->
+                <div class="publication-card glass-card rounded-xl p-6">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-16 h-16 bg-emerald-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-file-alt text-white text-2xl"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold text-emerald-800 mb-2">Lựa chọn dòng nấm men phân lập từ dịch quả thanh long đỏ (Hylocereus polyrhizus) Tiền Giang</h3>
+                            <p class="text-gray-600 mb-2"><strong>Tác giả:</strong> TKH Võ, HG Nguyễn, VB Nguyễn, TTT Nguyễn, HT Phan, CT Phan, ...</p>
+                            <p class="text-gray-500 italic">Tạp chí Nghiên cứu khoa học và Phát triển kinh tế Trường Đại học Tây Đô, 121-135</p>
+                            <span class="inline-block bg-yellow-400 text-emerald-900 px-3 py-1 rounded-full text-sm font-bold mt-2">2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Publication 2 -->
+                <div class="publication-card glass-card rounded-xl p-6">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-16 h-16 bg-yellow-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-file-alt text-white text-2xl"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold text-emerald-800 mb-2">Ảnh hưởng của chất khô hòa tan, pH, hàm lượng nấm men đến quá trình lên men rượu từ chuối già (Musa × paradisiaca)</h3>
+                            <p class="text-gray-600 mb-2"><strong>Tác giả:</strong> TKH Võ, KT Nguyễn, TTT Nguyễn, THT Lâm</p>
+                            <p class="text-gray-500 italic">Nghiên cứu khoa học và Phát triển kinh tế Trường Đại học Tây Đô, 96-110</p>
+                            <span class="inline-block bg-yellow-400 text-emerald-900 px-3 py-1 rounded-full text-sm font-bold mt-2">2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Publication 3 -->
+                <div class="publication-card glass-card rounded-xl p-6">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-16 h-16 bg-emerald-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-file-alt text-white text-2xl"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold text-emerald-800 mb-2">Đánh giá hoạt lực lên men của các dòng nấm men phân lập từ thanh long trắng (Hylocereus undatus) trong tạo ra sản phẩm rượu vang</h3>
+                            <p class="text-gray-600 mb-2"><strong>Tác giả:</strong> TTT Nguyễn, TV Phạm, TKH Võ, TH Trần, NT Châu, ĐK Lê</p>
+                            <p class="text-gray-500 italic">Tạp chí Nghiên cứu khoa học và Phát triển kinh tế Trường Đại học Tây Đô, 111-120</p>
+                            <span class="inline-block bg-yellow-400 text-emerald-900 px-3 py-1 rounded-full text-sm font-bold mt-2">2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Publication 4 -->
+                <div class="publication-card glass-card rounded-xl p-6">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-16 h-16 bg-orange-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-file-alt text-white text-2xl"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold text-emerald-800 mb-2">Nghiên cứu sản xuất bột trái noni (Morinda citrifolia L) và ứng dụng bột trái nhàu làm siro</h3>
+                            <p class="text-gray-600 mb-2"><strong>Tác giả:</strong> NK Dong, N Văn Ba, HP Thảo, NTT Thảo, VTK Hảo, LNT Vi, LTK Ngân</p>
+                            <p class="text-gray-500 italic">Tạp chí Kiểm soát Thực phẩm Việt Nam 8 (1), 22-29</p>
+                            <span class="inline-block bg-yellow-400 text-emerald-900 px-3 py-1 rounded-full text-sm font-bold mt-2">2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="https://scholar.google.com/citations?user=-8ScGKYAAAAJ&hl=vi" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-full transition transform hover:scale-105 shadow-lg">
+                    <i class="fab fa-google text-xl"></i>
+                    <span class="font-bold">Xem tất cả trên Google Scholar</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Projects Section -->
+    <section id="research" class="py-20 bg-emerald-700">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-white mb-4">
+                Đề tài <span class="text-yellow-400">Nghiên cứu</span>
+            </h2>
+            <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12"></div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Chủ nhiệm -->
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center">
+                            <i class="fas fa-crown text-emerald-800 text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-emerald-800">Chủ nhiệm đề tài</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-gradient-to-r from-yellow-50 to-emerald-50 rounded-xl border-l-4 border-yellow-400">
+                            <p class="text-gray-700 font-medium">Nghiên cứu chế biến trứng cá rô phi có bổ sung lòng trắng trứng gà</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thành viên -->
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-users text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-emerald-800">Thành viên đề tài</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-xl border-l-4 border-emerald-500">
+                            <p class="text-gray-700 font-medium">Nghiên cứu phân lập và tuyển chọn các dòng nấm men có khả năng chịu nhiệt và chịu ethanol cao ứng dụng trong lên men rượu vang thanh long ruột đỏ</p>
+                        </div>
+                        <div class="p-4 bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-xl border-l-4 border-emerald-500">
+                            <p class="text-gray-700 font-medium">Khảo sát quy trình sản xuất rượu vang chuối già cui (Musa acuminata Colla)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-emerald-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center">
+                            <i class="fas fa-flask text-emerald-800 text-xl"></i>
+                        </div>
+                        <span class="font-bold text-xl">ThS. Võ Thị Kiên Hảo</span>
+                    </div>
+                    <p class="text-emerald-200">Giảng viên ngành Công nghệ Thực phẩm</p>
+                    <p class="text-emerald-200">Khoa Sinh học Ứng dụng</p>
+                    <p class="text-emerald-200">Trường Đại học Tây Đô</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-yellow-400 mb-4">Liên hệ</h4>
+                    <p class="flex items-center gap-2 mb-2"><i class="fas fa-phone"></i> 0982 829 739</p>
+                    <p class="flex items-center gap-2 mb-2"><i class="fas fa-envelope"></i> vtkhao@tdu.edu.vn</p>
+                    <p class="flex items-center gap-2"><i class="fas fa-university"></i> Đại học Tây Đô, Cần Thơ</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-yellow-400 mb-4">Liên kết</h4>
+                    <a href="https://scholar.google.com/citations?user=-8ScGKYAAAAJ&hl=vi" target="_blank" class="flex items-center gap-2 mb-2 hover:text-yellow-400 transition">
+                        <i class="fab fa-google"></i> Google Scholar
+                    </a>
+                    <a href="#" class="flex items-center gap-2 mb-2 hover:text-yellow-400 transition">
+                        <i class="fas fa-university"></i> Trang web Đại học Tây Đô
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-emerald-700 pt-8 text-center">
+                <p class="text-emerald-300">&copy; 2025 ThS. Võ Thị Kiên Hảo. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle course content
+        function toggleCourse(id) {
+            const content = document.getElementById('course' + id);
+            const icon = document.getElementById('icon' + id);
+            
+            content.classList.toggle('active');
+            icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0)';
+        }
+
+        // Calculate cooling time
+        function calculateCooling() {
+            const h = parseFloat(document.getElementById('h1').value);
+            const a = parseFloat(document.getElementById('a1').value);
+            const k = parseFloat(document.getElementById('k1').value);
+            const fo = parseFloat(document.getElementById('fo1').value);
+            const cp = parseFloat(document.getElementById('cp1').value);
+            const rho = parseFloat(document.getElementById('rho1').value);
+
+            if (isNaN(h) || isNaN(a) || isNaN(k) || isNaN(fo) || isNaN(cp) || isNaN(rho)) {
+                alert('Vui lòng nhập đầy đủ các thông số!');
+                return;
+            }
+
+            const Bi = (h * a) / k;
+            const t = (fo * cp * rho * Math.pow(a, 2)) / k;
+
+            const resultDiv = document.getElementById('result1');
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = `
+                <p class="font-bold text-emerald-800 text-lg mb-2">Kết quả tính toán:</p>
+                <p class="mb-1"><strong>Số Biot (Bi):</strong> ${Bi.toFixed(4)}</p>
+                <p class="mb-1"><strong>Thời gian làm lạnh (t):</strong> ${t.toFixed(2)} giây</p>
+                <p><strong>Tương đương:</strong> ${(t/60).toFixed(2)} phút hoặc ${(t/3600).toFixed(4)} giờ</p>
+            `;
+        }
+
+        // Calculate RRS
+        function calculateRRS() {
+            const fishType = document.getElementById('fishType').value;
+            const temp = parseFloat(document.getElementById('temp').value);
+            const time0 = parseFloat(document.getElementById('time0').value);
+
+            if (isNaN(temp) || isNaN(time0)) {
+                alert('Vui lòng nhập đầy đủ các thông số!');
+                return;
+            }
+
+            let RRS, formula;
+            if (fishType === 'temperate') {
+                RRS = Math.pow(1 + 0.1 * temp, 2);
+                formula = `RRS = (1 + 0.1 × ${temp})² = ${RRS.toFixed(4)}`;
+            } else {
+                RRS = Math.exp(0.12 * temp);
+                formula = `Ln(RRS) = 0.12 × ${temp} = ${(0.12 * temp).toFixed(4)}<br>RRS = e^${(0.12 * temp).toFixed(4)} = ${RRS.toFixed(4)}`;
+            }
+
+            const storageTime = time0 / RRS;
+
+            const resultDiv = document.getElementById('resultRRS');
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = `
+                <p class="font-bold text-emerald-800 text-lg mb-2">Kết quả tính toán:</p>
+                <p class="mb-1"><strong>Loại cá:</strong> ${fishType === 'temperate' ? 'Cá ôn đới' : 'Cá nhiệt đới'}</p>
+                <p class="mb-1"><strong>Công thức:</strong> ${formula}</p>
+                <p class="mb-1"><strong>Tốc độ ươn hỏng tương đối (RRS):</strong> ${RRS.toFixed(4)}</p>
+                <p class="mb-1"><strong>Thời gian bảo quản ở 0°C:</strong> ${time0} ngày</p>
+                <p class="text-lg font-bold text-cyan-700"><strong>Thời gian bảo quản ở ${temp}°C:</strong> ${storageTime.toFixed(2)} ngày</p>
+            `;
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('shadow-xl');
+            } else {
+                nav.classList.remove('shadow-xl');
+            }
+        });
+    </script>
+</body>
+</html>
